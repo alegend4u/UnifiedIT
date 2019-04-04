@@ -1,0 +1,69 @@
+/* Theme : 1f2421-216869-f3de90-fbfef9-0c6291 */
+
+body {
+    background-color: #0c6291;
+}
+
+div {
+    background-color: #fbfef9;
+}
+
+h1 {
+    font-size: 3em;
+    font-family: 'Quicksand', sans-serif;
+}
+
+input[type=submit],
+button {
+    background-color: #f3de90;
+}
+
+.account_request_form {
+    max-width: 45%;
+}
+
+nav div{
+    background-color:inherit;
+    transition: inherit;
+}
+
+nav div a {
+    color: inherit !important;
+}
+
+.navbar-brand {
+    font-family: 'Roboto Slab', serif;
+    font-weight: bolder;
+}
+
+.scrolled {
+    background-color: #0c6291;
+    color: #fbfef9;
+    box-shadow: 0 0 15px 0 darkslategray;
+    transition: all 200ms linear;
+}
+
+nav li {
+    margin: 5px;
+}
+
+.nav-button {
+    border: 2px solid transparent;
+    color: #216869;
+    font-weight: bold;
+    padding: 10px;
+    transition: ease-out 0.2s;
+}
+
+.nav-button:hover {
+    text-decoration: none;
+    color: #216869;
+    border-color: #216869;
+    border-radius: 5px;
+}
+
+.landing-page {
+    box-shadow: 0 0 25px 0 darkslategray;
+    padding-top: 80px;
+    padding-bottom: 20px;
+}
