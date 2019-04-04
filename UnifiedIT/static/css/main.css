@@ -27,8 +27,8 @@ nav div{
     transition: inherit;
 }
 
-nav div a {
-    color: inherit !important;
+nav a{
+    color: #0c6291;
 }
 
 .navbar-brand {
@@ -36,11 +36,14 @@ nav div a {
     font-weight: bolder;
 }
 
-.scrolled {
+.scrollednav {
     background-color: #0c6291;
-    color: #fbfef9;
     box-shadow: 0 0 15px 0 darkslategray;
     transition: all 200ms linear;
+}
+
+.scrolleda {
+    color: #fbfef9;
 }
 
 nav li {
@@ -49,7 +52,6 @@ nav li {
 
 .nav-button {
     border: 2px solid transparent;
-    color: #216869;
     font-weight: bold;
     padding: 10px;
     transition: ease-out 0.2s;
@@ -57,7 +59,6 @@ nav li {
 
 .nav-button:hover {
     text-decoration: none;
-    color: #216869;
     border-color: #216869;
     border-radius: 5px;
 }
