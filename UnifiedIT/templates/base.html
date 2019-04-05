@@ -31,10 +31,8 @@
         <div class="container">
             <a href="/" class="navbar-brand">UnifiedIT</a>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/getAccount" class="nav-button"><span class="glyphicon glyphicon-user"></span>Request
-                        Account</a></li>
-                <li><a href="/login" class="nav-button"><span class="glyphicon glyphicon-log-in"></span>Login</a>
-                </li>
+                <li><a href="{% url 'get_account' %}" class="nav-button">Request Account</a></li>
+                <li><a href="{% url 'user_login' %}" class="nav-button">Login</a></li>
             </ul>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

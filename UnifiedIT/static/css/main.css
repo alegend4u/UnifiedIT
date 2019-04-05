@@ -61,8 +61,11 @@ nav li {
 
 .nav-button:hover {
     text-decoration: none;
-    color: #216869;
-    border-radius: 5px;
+    text-shadow: 0 0 1px darkslategray;
+} 
+
+.banner {
+    text-align: center;
 }
 
 .landing-page {

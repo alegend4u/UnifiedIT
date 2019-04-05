@@ -20,7 +20,7 @@ from Auth import views
 
 urlpatterns = [
     url(r'^$', views.index, name="index"),
-    url(r'^getAccount', views.getAccount, name="getAccount"),
-    url(r'^login', views.login, name='login'),
+    url(r'^get_account/', views.get_account, name="get_account"),
+    url(r'^login/', views.user_login, name='user_login'),
     path('admin/', admin.site.urls),
 ]
