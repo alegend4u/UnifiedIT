@@ -10,7 +10,13 @@ div {
 
 h1 {
     font-size: 3em;
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Quicksand', sans-serif;    
+    text-align: center;
+
+}
+
+p {
+    text-align: justify;
 }
 
 input[type=submit],
@@ -63,10 +69,6 @@ nav li {
     text-decoration: none;
     text-shadow: 0 0 1px darkslategray;
 } 
-
-.banner {
-    text-align: center;
-}
 
 .landing-page {
     box-shadow: 0 0 25px 0 darkslategray;
