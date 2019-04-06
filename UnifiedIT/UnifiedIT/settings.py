@@ -127,3 +127,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
+# To add the accounts' database settings
+import Auth.settings_manager
