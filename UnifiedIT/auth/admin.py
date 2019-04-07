@@ -22,7 +22,7 @@ def approve_request(model_admin, request, query_set):
             # Create an account for this user
             acc = Account()
             acc.user_account = acc_req
-            acc.user_password = 'test_pass'  # Generate random
+            acc.user_password = 'test_pass'  # TODO: Generate random
 
             acc.db_engine = db_details['ENGINE']
             acc.db_name = db_details['NAME']
@@ -40,8 +40,7 @@ def approve_request(model_admin, request, query_set):
 
             acc_req.save()
 
-
-            # Email the credentials to the user.
+            # TODO: Email the credentials to the user.
 
 
 approve_request.short_description = 'Grant selected requests'
