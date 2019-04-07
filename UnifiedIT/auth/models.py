@@ -10,7 +10,7 @@ class AccountRequest(models.Model):
     institute_iso = models.CharField(max_length=127)
 
     approved = models.BooleanField(default=False)
-    request_date = models.DateTimeField(default=timezone.now())
+    request_date = models.DateTimeField(default=timezone.now)
     approval_date = models.DateTimeField(null=True)
 
     def __str__(self):

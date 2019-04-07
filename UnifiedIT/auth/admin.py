@@ -3,15 +3,17 @@ from Auth.models import AccountRequest, Account
 
 from Auth.db_creator import DBManager
 
-from datetime import date
+from django.utils import timezone
 # Register your models here.
+
+admin.site.disable_action('delete_selected')
 
 
 def approve_request(model_admin, request, query_set):
     for acc_req in query_set:
         if not acc_req.approved:
             acc_req.approved = True
-            acc_req.approval_date = date.today()
+            acc_req.approval_date = timezone.now()
             acc_req.save()
 
             # Create a separate DB for the same
@@ -39,6 +41,17 @@ def approve_request(model_admin, request, query_set):
 approve_request.short_description = 'Grant selected requests'
 
 
+def delete_account(model_admin, request, query_set):
+    for account in query_set:
+        acc = DBManager(str(account.account).split()[0])
+        acc.delete()
+
+        account.delete()
+
+
+delete_account.short_description = 'Delete selected accounts'
+
+
 class AccountRequestAdmin(admin.ModelAdmin):
     list_display = ['username', 'institute_name', 'request_date', 'approval_date']
     actions = [approve_request, ]
@@ -51,6 +64,7 @@ class AccountAdmin(admin.ModelAdmin):
     # def ins_iso(self, acc_req):
     #     return acc_req.institute_iso
 
+    actions = [delete_account, ]
 
 admin.site.register(AccountRequest, AccountRequestAdmin)
 admin.site.register(Account, AccountAdmin)
