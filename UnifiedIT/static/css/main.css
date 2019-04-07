@@ -12,7 +12,6 @@ h1 {
     font-size: 3em;
     font-family: 'Quicksand', sans-serif;    
     text-align: center;
-
 }
 
 p {
@@ -22,6 +21,12 @@ p {
 input[type=submit],
 button {
     background-color: #f3de90;
+}
+
+input[type=text], input[type=password], input[type=email]{
+    border-radius: 0;
+    border-left: 4px solid #216869;
+    background-color: inherit;
 }
 
 .account_request_form {
@@ -40,6 +45,11 @@ nav a{
 .navbar-brand {
     font-family: 'Roboto Slab', serif;
     font-weight: bolder;
+    transition: all 0.5s, transform 0.5s;
+}
+.navbar-brand:hover {
+    text-shadow: 0 0 4px darkgray;
+    color: #0c6291;
 }
 
 .scrollednav {
@@ -67,6 +77,7 @@ nav li {
 
 .nav-button:hover {
     text-decoration: none;
+    color: #216869;
     text-shadow: 0 0 1px darkslategray;
 } 
 

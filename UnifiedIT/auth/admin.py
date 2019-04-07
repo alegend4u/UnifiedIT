@@ -12,9 +12,6 @@ admin.site.disable_action('delete_selected')
 def approve_request(model_admin, request, query_set):
     for acc_req in query_set:
         if not acc_req.approved:
-            acc_req.approved = True
-            acc_req.approval_date = timezone.now()
-            acc_req.save()
 
             # Create a separate DB for the same
             # Using 'Username' as DB_NAME
@@ -33,7 +30,16 @@ def approve_request(model_admin, request, query_set):
             acc.db_password = db_details['PASSWORD']
             acc.db_host = db_details['HOST']
             acc.db_port = db_details['PORT']
+
             acc.save()
+
+            # Save the Account Request
+            acc_req.approved = True
+            acc_req.approval_date = timezone.now()
+            acc_req.account_link = acc
+
+            acc_req.save()
+
 
             # Email the credentials to the user.
 

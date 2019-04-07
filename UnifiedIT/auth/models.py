@@ -17,7 +17,7 @@ class AccountRequest(models.Model):
     account_link = models.OneToOneField('Account', related_name='account_link', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return str(self.username + ' - ' + self.institute_name)
+        return str(self.username)
 
 
 class Account(models.Model):

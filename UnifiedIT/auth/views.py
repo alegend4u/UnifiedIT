@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
 from Auth import forms
@@ -9,11 +9,51 @@ from Auth import models
 
 
 def index(request):
-    return render(request, 'index.html')
+
+    if request.session.get('username'):
+        page = 'dashboard.html'
+        logged_in = True
+        username = request.session.get('username')
+    else:
+        page = 'index.html'
+        logged_in = False
+        username = ''
+
+    return render(request, page, {
+        'logged_in': logged_in,
+        'username': username
+    })
 
 
-def user_login(request):
-    return render(request, 'Auth/login.html')
+# Institute Admin Login View
+def admin_login(request):
+
+    validation_message = ''
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        try:
+            account_request = models.AccountRequest.objects.get(username=username)
+
+            if account_request.account_link.user_password == password:
+                request.session['username'] = username
+                return HttpResponseRedirect(reverse(index))
+
+        except models.AccountRequest.DoesNotExist as dne:
+            print('Username and Password didn\'t match:\n', dne)
+            validation_message = "Provided Username and Password didn't match our records."
+
+    return render(request, 'Auth/admin_login.html', context={
+        'validation_message': validation_message
+    })
+
+
+def admin_logout(request):
+
+    if request.session.get('username'):
+        del request.session['username']
+    return HttpResponseRedirect(reverse('index'))
 
 
 def get_account(request):
