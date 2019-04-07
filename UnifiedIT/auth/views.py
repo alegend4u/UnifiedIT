@@ -1,3 +1,5 @@
+from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse
 from django.shortcuts import render
 from Auth import forms
 from Auth import models

@@ -20,19 +20,19 @@ def approve_request(model_admin, request, query_set):
             # Using 'Username' as DB_NAME
             account_db_name = acc_req.username
             db_man = DBManager(account_db_name)
-            db_man.create()
+            db_details = db_man.create()
 
             # Create an account for this user
             acc = Account()
-            acc.account = acc_req
-            acc.password = 'test_pass'  # Generate random
+            acc.user_account = acc_req
+            acc.user_password = 'test_pass'  # Generate random
 
-            acc.db_engine = 'test_engine'
-            acc.db_name = 'test_name'
-            acc.db_user = 'test_user'
-            acc.db_password = 'test_db_pass'
-            acc.db_host = 'test_host'
-            acc.db_port = 'test_port'
+            acc.db_engine = db_details['ENGINE']
+            acc.db_name = db_details['NAME']
+            acc.db_user = db_details['USER']
+            acc.db_password = db_details['PASSWORD']
+            acc.db_host = db_details['HOST']
+            acc.db_port = db_details['PORT']
             acc.save()
 
             # Email the credentials to the user.
@@ -43,9 +43,11 @@ approve_request.short_description = 'Grant selected requests'
 
 def delete_account(model_admin, request, query_set):
     for account in query_set:
-        acc = DBManager(str(account.account).split()[0])
+        acc_req = AccountRequest.objects.get(username=account.user_account.username)
+        acc_req.status = 'Dead'
+        acc_req.save()
+        acc = DBManager(str(account))
         acc.delete()
-
         account.delete()
 
 
@@ -53,18 +55,21 @@ delete_account.short_description = 'Delete selected accounts'
 
 
 class AccountRequestAdmin(admin.ModelAdmin):
-    list_display = ['username', 'institute_name', 'request_date', 'approval_date']
-    actions = [approve_request, ]
+    list_display = ['username', 'institute_name', 'request_date', 'approval_date', 'status']
+    actions = [approve_request, 'delete_selected']
 
 
 class AccountAdmin(admin.ModelAdmin):
-    list_display = ['account', 'db_name']
 
-    # list_display = ['account', 'ins_iso', 'db_name']
-    # def ins_iso(self, acc_req):
-    #     return acc_req.institute_iso
+    def account_user(self, account):
+        return account.user_account.username
 
+    def account_institute(self, account):
+        return account.user_account.institute_name
+
+    list_display = ['account_user', 'account_institute', 'db_name']
     actions = [delete_account, ]
+
 
 admin.site.register(AccountRequest, AccountRequestAdmin)
 admin.site.register(Account, AccountAdmin)

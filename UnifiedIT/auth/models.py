@@ -13,13 +13,16 @@ class AccountRequest(models.Model):
     request_date = models.DateTimeField(default=timezone.now)
     approval_date = models.DateTimeField(null=True)
 
+    status = models.CharField(max_length=63, default='Inactive')
+    account_link = models.OneToOneField('Account', related_name='account_link', on_delete=models.CASCADE, null=True)
+
     def __str__(self):
         return str(self.username + ' - ' + self.institute_name)
 
 
 class Account(models.Model):
-    account = models.OneToOneField(AccountRequest, on_delete=models.CASCADE)
-    password = models.CharField(max_length=127)
+    user_account = models.OneToOneField(AccountRequest, on_delete=models.CASCADE)
+    user_password = models.CharField(max_length=127)
 
     # Account Database Details
     db_engine = models.CharField(max_length=127)
@@ -30,5 +33,4 @@ class Account(models.Model):
     db_port = models.CharField(max_length=127)
 
     def __str__(self):
-        username = str(self.account)
-        return username
+        return str(self.user_account.username)
