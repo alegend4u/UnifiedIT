@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from . import views
 
-app_name = 'Auth'
+app_name = 'Accountant'
 
 urlpatterns = [
     url(r'^get_account/', views.get_account, name="get_account"),

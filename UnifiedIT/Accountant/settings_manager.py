@@ -1,6 +1,6 @@
 # Important for editing the DATABASES variable
 from UnifiedIT.settings import DATABASES
-from Auth.db_creator import DB_SETTINGS_PATH
+from Accountant.db_creator import DB_SETTINGS_PATH
 import os
 
 # Load all the accounts' database settings

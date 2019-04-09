@@ -32,10 +32,10 @@
             <a href="/" class="navbar-brand">UnifiedIT</a>
             <ul class="nav navbar-nav navbar-right">
                 {% if logged_in %}
-                <li><a href="{% url 'Auth:admin_logout' %}" class="nav-button">Logout</a></li>
+                <li><a href="{% url 'Accountant:admin_logout' %}" class="nav-button">Logout</a></li>
                 {% else %}
-                <li><a href="{% url 'Auth:get_account' %}" class="nav-button">Request Account</a></li>
-                <li><a href="{% url 'Auth:admin_login' %}" class="nav-button">Login</a></li>
+                <li><a href="{% url 'Accountant:get_account' %}" class="nav-button">Request Account</a></li>
+                <li><a href="{% url 'Accountant:admin_login' %}" class="nav-button">Login</a></li>
                 {% endif %}
             </ul>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"

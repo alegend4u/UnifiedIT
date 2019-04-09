@@ -1,8 +1,8 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
-from Auth import forms
-from Auth import models
+from Accountant import forms
+from Accountant import models
 
 
 # Create your views here.
@@ -38,13 +38,14 @@ def admin_login(request):
 
             if account_request.account_link.user_password == password:
                 request.session['username'] = username
+                request.session['institute_name'] = account_request.institute_name
                 return HttpResponseRedirect(reverse(index))
 
         except models.AccountRequest.DoesNotExist as dne:
             print('Username and Password didn\'t match:\n', dne)
             validation_message = "Provided Username and Password didn't match our records."
 
-    return render(request, 'Auth/admin_login.html', context={
+    return render(request, 'Accountant/admin_login.html', context={
         'validation_message': validation_message
     })
 
@@ -77,4 +78,4 @@ def get_account(request):
 
             print(username, email, institute_name, institute_iso)
 
-    return render(request, 'Auth/get_account.html', {'user_form': user_form, 'registered': registered})
+    return render(request, 'Accountant/get_account.html', {'user_form': user_form, 'registered': registered})

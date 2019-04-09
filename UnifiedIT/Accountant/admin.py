@@ -1,7 +1,7 @@
 from django.contrib import admin
-from Auth.models import AccountRequest, Account
+from Accountant.models import AccountRequest, Account
 
-from Auth.db_creator import DBManager
+from Accountant.db_creator import DBManager
 
 from django.utils import timezone
 # Register your models here.
@@ -14,8 +14,8 @@ def approve_request(model_admin, request, query_set):
         if not acc_req.approved:
 
             # Create a separate DB for the same
-            # Using 'Username' as DB_NAME
-            account_db_name = acc_req.username
+            # Using 'institute_name' as DB_NAME
+            account_db_name = acc_req.institute_name.replace(' ', '_')
             db_man = DBManager(account_db_name)
             db_details = db_man.create()
 

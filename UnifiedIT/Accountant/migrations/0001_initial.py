@@ -38,12 +38,12 @@ class Migration(migrations.Migration):
                 ('request_date', models.DateTimeField(default=django.utils.timezone.now)),
                 ('approval_date', models.DateTimeField(null=True)),
                 ('status', models.CharField(default='Inactive', max_length=63)),
-                ('account_link', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='account_link', to='Auth.Account')),
+                ('account_link', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='account_link', to='Accountant.Account')),
             ],
         ),
         migrations.AddField(
             model_name='account',
             name='user_account',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='Auth.AccountRequest'),
+            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='Accountant.AccountRequest'),
         ),
     ]

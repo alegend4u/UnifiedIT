@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Auth',
+    'Accountant',
     'Profiler'
 ]
 
@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'Profiler.DatabaseSelector.RouterMiddleware',
 ]
 
 ROOT_URLCONF = 'UnifiedIT.urls'
@@ -87,6 +88,7 @@ DATABASES = {
     }
 }
 
+DATABASE_ROUTERS = ['Profiler.DatabaseSelector.ProfilerRouter']
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -129,4 +131,4 @@ STATICFILES_DIRS = [
     STATIC_DIR,
 ]
 # To add the accounts' database settings
-import Auth.settings_manager
+import Accountant.settings_manager
