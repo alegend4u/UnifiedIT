@@ -13,7 +13,8 @@ class AccountRequest(models.Model):
     request_date = models.DateTimeField(default=timezone.now)
     approval_date = models.DateTimeField(null=True)
 
-    status = models.CharField(max_length=63, default='Inactive')
+    status = models.CharField(max_length=63, default='Inactive')     # TODO: Convert to choices
+
     account_link = models.OneToOneField('Account', related_name='account_link', on_delete=models.CASCADE, null=True)
 
     def __str__(self):

@@ -20,8 +20,7 @@ class RouterMiddleware(object):
 
     def process_view(self, request, view_func, args, kwargs):
         global db_name
-        institute_name = request.session.get('institute_name')
-        db_name = institute_name
+        db_name = request.session.get('institute_name')
 
 
 class ProfilerRouter:
@@ -32,19 +31,30 @@ class ProfilerRouter:
                 print('Database selected: ', db_name)
                 return db_name
             print('Database selected for read: ', db_name)
-        return "default"
+        return "admin_db"
 
     def db_for_write(self, model, **hints):
         if model._meta.app_label == 'Profiler':
             if db_name:
                 print('Database selected: ', db_name)
                 return db_name
-            print('Database selected for read: Default')
-        return "default"
+            print('Database selected for read: admin_db')
+        return "admin_db"
+
+    def allow_relation(self, obj1, obj2, **hints):
+        app_labels = [obj1._meta.app_label, obj2._meta.app_label]
+
+        # if obj1._meta.app_label == 'Accountant' or \
+        #    obj2._meta.app_label == 'Accountant':
+        if 'auth' in app_labels:
+            return True
+        return None
 
     def allow_migrate(self, db, app_label, model_name=None, **hints):
+
+        print('{}.{}, db = {}, hints = {}'.format(app_label, model_name, db, str(hints)), end=' ')
         if app_label == 'Profiler':
-            return db == db_name
-        elif app_label == 'Accountant':
-            return db == 'default'
-        return None
+            print(db == 'insname')
+            return db == 'insname'
+        print(db == 'admin_db')
+        return db == 'admin_db'

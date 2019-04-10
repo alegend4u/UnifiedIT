@@ -9,5 +9,13 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://127.0.0.1:5432/UnifiedIT</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="Django admin_db" uuid="353722f9-2356-43a6-9f2a-8ddd5645851d">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/UnifiedIT/settings.py</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://127.0.0.1:5432/UnifiedIT</jdbc-url>
+    </data-source>
   </component>
 </project>

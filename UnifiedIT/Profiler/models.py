@@ -1,11 +1,14 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 # Create your models here.
 
 
 class Person(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    username = models.CharField(max_length=31)
+    email = models.EmailField(max_length=31)
+    password = models.CharField(max_length=31)
+    first_name = models.CharField(max_length=31)
+    last_name = models.CharField(max_length=31)
 
     # Additional
     dob = models.DateField()
@@ -14,8 +17,8 @@ class Person(models.Model):
     FEMALE = 'F'
     GENDER_CHOICES = ((MALE, 'Male'), (FEMALE, 'Female'))
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default=MALE)
-    start_date = models.DateField()
 
+    start_date = models.DateField()
     address_link = models.OneToOneField('Address', related_name='address', on_delete=models.CASCADE)
     contacts_link = models.ForeignKey('Contact', on_delete=models.CASCADE)
 

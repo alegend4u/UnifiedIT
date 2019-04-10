@@ -87,6 +87,7 @@ class DBManager:
         except FileNotFoundError as error:
             print("Database file not found!", error)
 
-        del settings.DATABASES[self.name]
-
-        print('Account %(self.name)s deleted!')
+        # if settings.DATABASES.get(self.name):
+        #     del settings.DATABASES[self.name]
+        print(settings.DATABASES)
+        print('Account {} deleted!', self.name)

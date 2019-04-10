@@ -60,7 +60,7 @@ delete_account.short_description = 'Delete selected accounts'
 
 
 class AccountRequestAdmin(admin.ModelAdmin):
-    list_display = ['username', 'institute_name', 'request_date', 'approval_date', 'status']
+    list_display = ['username', 'institute_name', 'request_date', 'approval_date', 'approved', 'status']
     actions = [approve_request, 'delete_selected']
 
 
