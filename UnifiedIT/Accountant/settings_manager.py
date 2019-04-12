@@ -5,6 +5,8 @@ import os
 
 # Load all the accounts' database settings
 for file in os.listdir(DB_SETTINGS_PATH):
+    if file == 'desktop.ini':
+        continue
     full_path = os.path.join(DB_SETTINGS_PATH, file)
     f = open(full_path)
     content = f.read()

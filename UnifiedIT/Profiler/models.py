@@ -19,11 +19,11 @@ class Person(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default=MALE)
 
     start_date = models.DateField()
-    address_link = models.OneToOneField('Address', related_name='address', on_delete=models.CASCADE)
-    contacts_link = models.ForeignKey('Contact', on_delete=models.CASCADE)
+    address_link = models.OneToOneField('Address', related_name='address', on_delete=models.CASCADE, null=True, blank=True)
+    contacts_link = models.ForeignKey('Contact', on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return self.user.username
+        return self.username
 
 
 class Address(models.Model):
