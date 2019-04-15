@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.models import User, Group
 from Accountant.models import AccountRequest, Account
 
 from Accountant.db_creator import DBManager
@@ -6,7 +7,14 @@ from Accountant.db_creator import DBManager
 from django.utils import timezone
 # Register your models here.
 
-admin.site.disable_action('delete_selected')
+
+
+class MainAdmin(admin.AdminSite):
+    site_header = 'UnifiedIT Administration'
+
+
+main_admin = MainAdmin(name='mainadmin')
+main_admin.disable_action('delete_selected')
 
 
 def approve_request(model_admin, request, query_set):
@@ -42,6 +50,8 @@ def approve_request(model_admin, request, query_set):
 
             # TODO: Email the credentials to the user.
 
+            # Assign an admin site to the institute
+
 
 approve_request.short_description = 'Grant selected requests'
 
@@ -76,5 +86,7 @@ class AccountAdmin(admin.ModelAdmin):
     actions = [delete_account, ]
 
 
-admin.site.register(AccountRequest, AccountRequestAdmin)
-admin.site.register(Account, AccountAdmin)
+main_admin.register(User)
+main_admin.register(Group)
+main_admin.register(AccountRequest, AccountRequestAdmin)
+main_admin.register(Account, AccountAdmin)
