@@ -1,12 +1,12 @@
 from django.contrib import admin
-from django.contrib.auth.models import User, Group
+from django.contrib.auth import get_user_model
 from Accountant.models import AccountRequest, Account
-
 from Accountant.db_creator import DBManager
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from Accountant.forms import UserChangeForm, UserCreationForm
 
 from django.utils import timezone
 # Register your models here.
-
 
 
 class MainAdmin(admin.AdminSite):
@@ -29,8 +29,15 @@ def approve_request(model_admin, request, query_set):
 
             # Create an account for this user
             acc = Account()
-            acc.user_account = acc_req
-            acc.user_password = 'test_pass'  # TODO: Generate random
+            acc.details = acc_req
+            acc.user = get_user_model().objects.create_user(
+                username=acc_req.username,
+                email=acc_req.email,
+                password='ins_admin',  # TODO: Generate Random
+                is_institute_admin=True
+            )
+            acc.user.account_link = acc
+            acc.db_key = account_db_name  # Using a separate field to store database key for settings.DATABASE
 
             acc.db_engine = db_details['ENGINE']
             acc.db_name = db_details['NAME']
@@ -50,8 +57,6 @@ def approve_request(model_admin, request, query_set):
 
             # TODO: Email the credentials to the user.
 
-            # Assign an admin site to the institute
-
 
 approve_request.short_description = 'Grant selected requests'
 
@@ -70,23 +75,35 @@ delete_account.short_description = 'Delete selected accounts'
 
 
 class AccountRequestAdmin(admin.ModelAdmin):
-    list_display = ['username', 'institute_name', 'request_date', 'approval_date', 'approved', 'status']
+    list_display = ['username', 'institute_name', 'request_date', 'approval_date', 'approved']
     actions = [approve_request, 'delete_selected']
 
 
 class AccountAdmin(admin.ModelAdmin):
 
     def account_user(self, account):
-        return account.user_account.username
+        return account.user.username
 
     def account_institute(self, account):
-        return account.user_account.institute_name
+        return account.details.institute_name
 
-    list_display = ['account_user', 'account_institute', 'db_name']
+    list_display = ['account_user', 'account_institute', 'db_key', 'status']
     actions = [delete_account, ]
 
 
-main_admin.register(User)
-main_admin.register(Group)
+class UserAdmin(BaseUserAdmin):
+    # The forms to add and change user instances
+    form = UserChangeForm
+    add_form = UserCreationForm
+
+    list_display = ('username', 'email', 'is_institute_admin')
+    list_filter = ('is_institute_admin',)
+    search_fields = ('username',)
+    ordering = ('username',)
+    filter_horizontal = ()
+
+
+main_admin.register(get_user_model(), UserAdmin)
+# main_admin.register(Group)
 main_admin.register(AccountRequest, AccountRequestAdmin)
 main_admin.register(Account, AccountAdmin)

@@ -14,12 +14,12 @@ class RouterMiddleware(object):
     def process_view(self, request, view_func, args, kwargs):
         global db_name
 
-        if request.user.is_staff:
-            # TODO: Determine whether admin staff accessing which institute
-            # and select relevant database.
-            pass
-        else:
-            db_name = request.session.get('institute_name')
+        if request.user.is_superuser:
+            db_name = "admin_db"
+        elif request.user.is_anonymous:
+            db_name = ''
+        elif request.user.is_institute_admin:
+            db_name = request.user.account_link.db_key
 
 
 class ProfilerRouter:
