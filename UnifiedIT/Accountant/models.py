@@ -15,6 +15,20 @@ class User(AbstractUser):
 
     is_institute_admin = models.BooleanField(default=False)
 
+    def has_module_perms(self, app_label):
+        print('Perm: ', app_label, 'and', self.is_institute_admin)
+        if self.is_institute_admin:
+            return app_label == 'Profiler'
+        return self.is_superuser
+
+    def has_perm(self, perm, obj=None):
+        app_label = perm.split('.')[0]
+        print('has_perm: ', app_label)
+        if self.is_institute_admin:
+            if app_label == 'Profiler':
+                return True
+        return self.is_superuser
+
 
 class UserManager(BaseUserManager):
     def create_user(self, username, email, is_institute_admin, password=None):
