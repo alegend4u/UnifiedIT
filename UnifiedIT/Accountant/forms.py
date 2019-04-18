@@ -1,5 +1,6 @@
 from django import forms
 from Accountant.models import User
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 
@@ -22,7 +23,7 @@ class UserForm(forms.Form):
     }))
 
 
-class UserCreationForm(forms.ModelForm):
+class CustomUserCreationForm(UserCreationForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
@@ -30,7 +31,8 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'is_institute_admin')
+        fields = ('username', 'is_institute_admin', 'account_link')
+        # fields = '__all__'
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -42,14 +44,14 @@ class UserCreationForm(forms.ModelForm):
 
     def save(self, commit=True):
         # Save the provided password in hashed format
-        user = super().save(commit=False)
+        user = super(CustomUserCreationForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
         return user
 
 
-class UserChangeForm(forms.ModelForm):
+class CustomUserChangeForm(UserChangeForm):
     """A form for updating users. Includes all the fields on
     the user, but replaces the password field with admin's
     password hash display field.
@@ -58,7 +60,8 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'last_login', 'date_joined', 'is_institute_admin')
+        # fields = ('username', 'email', 'first_name', 'last_name', 'last_login', 'date_joined', 'is_institute_admin')
+        fields = '__all__'
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.

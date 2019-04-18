@@ -1,3 +1,6 @@
+from Accountant.models import Account
+
+
 global db_name
 db_name = ''
 
@@ -19,27 +22,22 @@ class RouterMiddleware(object):
         elif request.user.is_anonymous:
             db_name = ''
         elif request.user.is_institute_admin:
-            db_name = request.user.account_link.db_key
+            current_user = Account.objects.get(user=request.user)
+            db_name = current_user.db_key
 
 
 class ProfilerRouter:
 
     def db_for_read(self, model, **hints):
-        print('db w/r model: ', model)
         if model._meta.app_label == 'Profiler':
             if db_name:
-                print('Database selected: ', db_name)
                 return db_name
-            print('Database selected for read: admin_db')
         return "admin_db"
 
     def db_for_write(self, model, **hints):
-        print('db w/r model: ', model)
         if model._meta.app_label == 'Profiler':
             if db_name:
-                print('Database selected: ', db_name)
                 return db_name
-            print('Database selected for read: admin_db')
         return "admin_db"
 
     def allow_relation(self, obj1, obj2, **hints):

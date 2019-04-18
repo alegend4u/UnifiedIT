@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.contrib.auth import get_user_model
 from Accountant.models import AccountRequest, Account
 from Accountant.db_creator import DBManager
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from Accountant.forms import UserChangeForm, UserCreationForm
+from django.contrib.auth.admin import UserAdmin
+from Accountant.forms import CustomUserCreationForm, CustomUserChangeForm
 
 from django.utils import timezone
 # Register your models here.
@@ -91,19 +91,46 @@ class AccountAdmin(admin.ModelAdmin):
     actions = [delete_account, ]
 
 
-class UserAdmin(BaseUserAdmin):
+class CustomUserAdmin(UserAdmin):
     # The forms to add and change user instances
-    form = UserChangeForm
-    add_form = UserCreationForm
+    form = CustomUserChangeForm
+    add_form = CustomUserCreationForm
 
-    list_display = ('username', 'email', 'is_institute_admin')
+    list_display = ('username', 'email', 'is_institute_admin', 'is_superuser')
     list_filter = ('is_institute_admin',)
+
+    actions = ['delete_selected',]
+
+    fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'email')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'is_institute_admin',
+                                    'groups', 'user_permissions')}),
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+        ('Account', {'fields': ('account_link',)})
+    )
+
+    add_fieldsets = (
+        (None, {'fields': ('username', 'password1', 'password2')}),
+        ('Institute Info', {
+            'fields': ('is_institute_admin', 'account_link',)
+        }),
+    )
+
     search_fields = ('username',)
     ordering = ('username',)
     filter_horizontal = ()
 
+    def save_model(self, request, obj, form, change):
 
-main_admin.register(get_user_model(), UserAdmin)
+        if not form.cleaned_data['is_institute_admin'] or not form.cleaned_data['is_institute_admin']:
+            obj.account_link = None
+            obj.is_institute_admin = False
+
+        super().save_model(request, obj, form, change)
+
+
+main_admin.register(get_user_model(), CustomUserAdmin)
 # main_admin.register(Group)
 main_admin.register(AccountRequest, AccountRequestAdmin)
 main_admin.register(Account, AccountAdmin)
