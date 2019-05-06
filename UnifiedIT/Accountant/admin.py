@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from Accountant.models import AccountRequest, Account
+from Accountant.models import *
 from Accountant.db_creator import DBManager
 from django.contrib.auth.admin import UserAdmin
 from Accountant.forms import CustomUserCreationForm, CustomUserChangeForm
@@ -19,7 +19,7 @@ main_admin.disable_action('delete_selected')
 
 def approve_request(model_admin, request, query_set):
     for acc_req in query_set:
-        if not acc_req.approved:
+        if not acc_req.status == 'approved':
 
             # Create a separate DB for the same
             # Using 'institute_name' as DB_NAME
@@ -36,7 +36,6 @@ def approve_request(model_admin, request, query_set):
                 password='ins_admin',  # TODO: Generate Random
                 is_institute_admin=True
             )
-            acc.user.account_link = acc
             acc.db_key = account_db_name  # Using a separate field to store database key for settings.DATABASE
 
             acc.db_engine = db_details['ENGINE']
@@ -46,10 +45,17 @@ def approve_request(model_admin, request, query_set):
             acc.db_host = db_details['HOST']
             acc.db_port = db_details['PORT']
 
+            acc.user.account_link = acc  # This doesn't work actually
+
             acc.save()
 
+            acc_user = User.objects.get(pk=acc.user.id)  # So taking a separate user var
+            acc_user.account_link = acc
+            acc_user.save()
+
+
             # Save the Account Request
-            acc_req.approved = True
+            acc_req.status = 'approved'
             acc_req.approval_date = timezone.now()
             acc_req.account_link = acc
 
@@ -63,10 +69,12 @@ approve_request.short_description = 'Grant selected requests'
 
 def delete_account(model_admin, request, query_set):
     for account in query_set:
-        acc_req = AccountRequest.objects.get(username=account.user_account.username)
-        acc_req.status = 'Dead'
+        acc_req = AccountRequest.objects.get(username=account.user.username)
+        acc_req.status = 'dead'
         acc_req.save()
         acc = DBManager(str(account))
+        acc_user = User.objects.get(username=account.user.username)
+        acc_user.delete()
         acc.delete()
         account.delete()
 
@@ -75,7 +83,7 @@ delete_account.short_description = 'Delete selected accounts'
 
 
 class AccountRequestAdmin(admin.ModelAdmin):
-    list_display = ['username', 'institute_name', 'request_date', 'approval_date', 'approved']
+    list_display = ['username', 'institute_name', 'request_date', 'approval_date', 'status']
     actions = [approve_request, 'delete_selected']
 
 

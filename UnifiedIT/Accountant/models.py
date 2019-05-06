@@ -11,7 +11,7 @@ CHAR_FIELD_MAX_LENGTH = 63
 
 class User(AbstractUser):
     account_link = models.OneToOneField('Account', related_name='user_account_link', on_delete=models.CASCADE,
-                                        null=True, default=None, blank=True)
+                                        null=True, default=None, blank=True)  # TODO: Remove explicit assignment needed.
 
     is_institute_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=True) # TODO: Authentication on basis of 'is_institute_admin'.
@@ -62,7 +62,21 @@ class AccountRequest(models.Model):
     institute_name = models.CharField(max_length=CHAR_FIELD_MAX_LENGTH)
     institute_iso = models.CharField(max_length=CHAR_FIELD_MAX_LENGTH)
 
-    approved = models.BooleanField(default=False)
+    APPROVED = 'approved'
+    PENDING = 'pending'
+    REJECTED = 'rejected'
+    DEAD = 'dead'
+
+    STATUS_CHOICES = (
+        (APPROVED, 'Approved'),
+        (PENDING, 'Pending'),
+        (REJECTED, 'Rejected'),
+        (DEAD, 'Dead')
+    )
+
+    status = models.CharField(max_length=CHAR_FIELD_MAX_LENGTH,
+                              choices=STATUS_CHOICES, default=PENDING)
+
     request_date = models.DateTimeField(default=timezone.now)
     approval_date = models.DateTimeField(null=True)
 
@@ -81,6 +95,7 @@ class Account(models.Model):
     ACTIVE = 'active'
     INACTIVE = 'inactive'
     SUSPENDED = 'suspended'
+
     STATUS_CHOICES = (
         (ACTIVE, 'Active'),
         (INACTIVE, 'Inactive'),

@@ -4,9 +4,15 @@
     <list default="true" id="6e866acc-f4fb-489a-bbf9-c2339d6d4485" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Accountant/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/Accountant/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Accountant/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/Accountant/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Accountant/database_settings/itsinsname.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Accountant/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Accountant/migrations/0002_user_is_staff.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Accountant/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Accountant/migrations/desktop.ini" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Accountant/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Accountant/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Profiler/DatabaseSelector.py" beforeDir="false" afterPath="$PROJECT_DIR$/Profiler/DatabaseSelector.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Profiler/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Profiler/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Profiler/migrations/desktop.ini" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,11 +28,22 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Accountant/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="409">
-              <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+            <state relative-caret-position="646">
+              <caret line="79" column="61" selection-start-line="79" selection-start-column="61" selection-end-line="79" selection-end-column="61" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
+                <element signature="e#228#1101#0" />
+                <element signature="e#1144#1751#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/UnifiedIT/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1263">
+              <caret line="111" column="35" selection-start-line="111" selection-start-column="35" selection-end-line="111" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -34,12 +51,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Accountant/admin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="98" column="77" selection-start-line="98" selection-start-column="77" selection-end-line="98" selection-end-column="77" />
+            <state relative-caret-position="215">
+              <caret line="49" column="12" selection-start-line="49" selection-start-column="12" selection-end-line="49" selection-end-column="12" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
-                <element signature="e#598#1988#0" />
-                <element signature="e#2112#2361#0" />
               </folding>
             </state>
           </provider>
@@ -48,20 +63,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Accountant/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="409">
-              <caret line="45" column="53" lean-forward="true" selection-start-line="45" selection-start-column="53" selection-end-line="45" selection-end-column="53" />
+            <state relative-caret-position="714">
+              <caret line="45" column="53" selection-start-line="45" selection-start-column="53" selection-end-line="45" selection-end-column="53" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Profiler/DatabaseSelector.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
             </state>
           </provider>
         </entry>
@@ -123,9 +129,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="950" />
-    <option name="width" value="980" />
-    <option name="height" value="1040" />
+    <option name="x" value="952" />
+    <option name="width" value="977" />
+    <option name="height" value="1038" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -135,6 +141,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -155,13 +162,17 @@
             <path>
               <item name="UnifiedIT" type="b2602c69:ProjectViewProjectNode" />
               <item name="UnifiedIT" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="UnifiedIT" type="b2602c69:ProjectViewProjectNode" />
+              <item name="UnifiedIT" type="462c0819:PsiDirectoryNode" />
               <item name="UnifiedIT" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -251,7 +262,12 @@
       <workItem from="1555354694033" duration="9444000" />
       <workItem from="1555389140772" duration="13294000" />
       <workItem from="1555442314066" duration="2187000" />
-      <workItem from="1555564443038" duration="6341000" />
+      <workItem from="1555564443038" duration="6693000" />
+      <workItem from="1555571211545" duration="14000" />
+      <workItem from="1555571241437" duration="14000" />
+      <workItem from="1555704186210" duration="602000" />
+      <workItem from="1556899019758" duration="910000" />
+      <workItem from="1557134607295" duration="5846000" />
     </task>
     <task id="LOCAL-00001" summary="Database creation on account approval applied.">
       <created>1554583050987</created>
@@ -337,11 +353,18 @@
       <option name="project" value="LOCAL" />
       <updated>1555406872613</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Updated UserCreation and UserChange Forms.">
+      <created>1555570887752</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1555570887752</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="130189000" />
+    <option name="totallyTimeSpent" value="137927000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -356,12 +379,12 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18766756" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20107238" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32956153" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49932975" visible="true" weight="0.18528996" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49932975" weight="0.18528996" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -370,7 +393,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32956153" />
       <window_info anchor="bottom" id="Database Changes" order="9" weight="0.32956153" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5013405" side_tool="true" weight="0.27298445" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49865952" weight="0.16690241" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.49865952" visible="true" weight="0.24328147" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.42291373" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -435,7 +458,8 @@
     <MESSAGE value="Added Multiple Django Admin Sites." />
     <MESSAGE value="Custom User Implemented." />
     <MESSAGE value="Admin Panel and Custom Authentication implemented." />
-    <option name="LAST_COMMIT_MESSAGE" value="Admin Panel and Custom Authentication implemented." />
+    <MESSAGE value="Updated UserCreation and UserChange Forms." />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated UserCreation and UserChange Forms." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/Accountant/apps.py">
@@ -481,13 +505,6 @@
           <folding>
             <element signature="e#0#32#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="34" column="45" selection-start-line="34" selection-start-column="45" selection-end-line="34" selection-end-column="45" />
         </state>
       </provider>
     </entry>
@@ -549,13 +566,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/UnifiedIT/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="111" column="35" selection-start-line="111" selection-start-column="35" selection-end-line="111" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/UnifiedIT/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
@@ -576,17 +586,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Profiler/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="29" column="37" selection-start-line="29" selection-start-column="37" selection-end-line="29" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Accountant/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="45" column="53" lean-forward="true" selection-start-line="45" selection-start-column="53" selection-end-line="45" selection-end-column="53" />
+        <state relative-caret-position="714">
+          <caret line="45" column="53" selection-start-line="45" selection-start-column="53" selection-end-line="45" selection-end-column="53" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>
@@ -596,28 +599,59 @@
     <entry file="file://$PROJECT_DIR$/Profiler/DatabaseSelector.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
-          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="34" column="45" selection-start-line="34" selection-start-column="45" selection-end-line="34" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Profiler/tests.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Profiler/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="34" column="45" lean-forward="true" selection-start-line="34" selection-start-column="45" selection-end-line="34" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../env/Lib/site-packages/django/db/models/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="520" column="8" selection-start-line="520" selection-start-column="8" selection-end-line="520" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UnifiedIT/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1263">
+          <caret line="111" column="35" selection-start-line="111" selection-start-column="35" selection-end-line="111" selection-end-column="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Accountant/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+        <state relative-caret-position="646">
+          <caret line="79" column="61" selection-start-line="79" selection-start-column="61" selection-end-line="79" selection-end-column="61" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
+            <element signature="e#228#1101#0" />
+            <element signature="e#1144#1751#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Accountant/admin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="98" column="77" selection-start-line="98" selection-start-column="77" selection-end-line="98" selection-end-column="77" />
+        <state relative-caret-position="215">
+          <caret line="49" column="12" selection-start-line="49" selection-start-column="12" selection-end-line="49" selection-end-column="12" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
-            <element signature="e#598#1988#0" />
-            <element signature="e#2112#2361#0" />
           </folding>
         </state>
       </provider>
