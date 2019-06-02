@@ -65,6 +65,11 @@ class DBManager:
 
         # Save the new settings for new DB to file
         save_to_file(new_database)
+
+        # Migration on the database
+        os.chdir(settings.BASE_DIR)
+        os.system('python manage.py migrate --database='+self.name)
+
         return new_database
 
     def delete(self):

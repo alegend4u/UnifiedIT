@@ -13,7 +13,7 @@ class MainAdmin(admin.AdminSite):
     site_header = 'UnifiedIT Administration'
 
 
-main_admin = MainAdmin(name='mainadmin')
+main_admin = MainAdmin(name='main_admin')
 main_admin.disable_action('delete_selected')
 
 
@@ -52,7 +52,6 @@ def approve_request(model_admin, request, query_set):
             acc_user = User.objects.get(pk=acc.user.id)  # So taking a separate user var
             acc_user.account_link = acc
             acc_user.save()
-
 
             # Save the Account Request
             acc_req.status = 'approved'
@@ -107,7 +106,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = ('username', 'email', 'is_institute_admin', 'is_superuser')
     list_filter = ('is_institute_admin',)
 
-    actions = ['delete_selected',]
+    actions = ['delete_selected', ]
 
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
@@ -139,6 +138,5 @@ class CustomUserAdmin(UserAdmin):
 
 
 main_admin.register(get_user_model(), CustomUserAdmin)
-# main_admin.register(Group)
 main_admin.register(AccountRequest, AccountRequestAdmin)
 main_admin.register(Account, AccountAdmin)

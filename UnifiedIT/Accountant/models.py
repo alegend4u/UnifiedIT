@@ -11,24 +11,23 @@ CHAR_FIELD_MAX_LENGTH = 63
 
 class User(AbstractUser):
     account_link = models.OneToOneField('Account', related_name='user_account_link', on_delete=models.CASCADE,
-                                        null=True, default=None, blank=True)  # TODO: Remove explicit assignment needed.
+                                        null=True, default=None, blank=True)
 
     is_institute_admin = models.BooleanField(default=False)
-    is_staff = models.BooleanField(default=True) # TODO: Authentication on basis of 'is_institute_admin'.
-
-    def has_module_perms(self, app_label):
-        print('Perm: ', app_label, 'and', self.is_institute_admin)
-        if self.is_institute_admin:
-            return app_label == 'Profiler'
-        return self.is_superuser
+    is_staff = models.BooleanField(default=True)  # TODO: Authentication on basis of 'is_institute_admin'.
 
     def has_perm(self, perm, obj=None):
         app_label = perm.split('.')[0]
-        print('has_perm: ', app_label)
         if self.is_institute_admin:
-            if app_label == 'Profiler':
-                return True
-        return self.is_superuser
+            return app_label == 'Profiler'
+        if self.is_superuser:
+            return app_label == 'Accountant'
+
+    def has_module_perms(self, app_label):
+        if self.is_institute_admin:
+            return app_label == 'Profiler'
+        if self.is_superuser:
+            return app_label == 'Accountant'
 
 
 class UserManager(BaseUserManager):
