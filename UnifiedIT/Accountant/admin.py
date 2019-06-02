@@ -34,7 +34,8 @@ def approve_request(model_admin, request, query_set):
                 username=acc_req.username,
                 email=acc_req.email,
                 password='ins_admin',  # TODO: Generate Random
-                is_institute_admin=True
+                is_institute_admin=True,
+                is_staff=True
             )
             acc.db_key = account_db_name  # Using a separate field to store database key for settings.DATABASE
 
