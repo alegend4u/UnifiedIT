@@ -4,6 +4,8 @@ from django.shortcuts import render
 from Accountant import forms
 from Accountant import models
 
+from django.contrib.auth.hashers import check_password
+from django.contrib.auth import get_user_model
 
 # Create your views here.
 
@@ -34,11 +36,13 @@ def admin_login(request):
         password = request.POST.get('password')
 
         try:
-            account_request = models.AccountRequest.objects.get(username=username)
-
-            if account_request.account_link.user_password == password:
+            user = get_user_model().objects.get(username=username)
+            valid = check_password(password, encoded=user.password)
+            acc = models.Account.objects.get(user=user)
+            acc_req = models.AccountRequest.objects.get(account_link=acc)
+            if valid:
                 request.session['username'] = username
-                request.session['institute_name'] = account_request.institute_name
+                request.session['institute_name'] = acc_req.institute_name
                 return HttpResponseRedirect(reverse(index))
 
         except models.AccountRequest.DoesNotExist as dne:
@@ -51,7 +55,6 @@ def admin_login(request):
 
 
 def admin_logout(request):
-
     if request.session.get('username'):
         del request.session['username']
     return HttpResponseRedirect(reverse('index'))
