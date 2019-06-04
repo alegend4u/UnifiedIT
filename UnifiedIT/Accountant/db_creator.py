@@ -27,6 +27,8 @@ DATABASES['%(NAME)s'] = {
     db_file = os.path.join(DB_SETTINGS_PATH, db_settings['NAME'] + '.py')
 
     # Writing settings to file
+    if not os.path.exists(DB_SETTINGS_PATH):
+        os.mkdir(DB_SETTINGS_PATH)
     with open(db_file, 'w') as f:
         f.write(db_string)
 
