@@ -4,6 +4,10 @@ from Accountant.db_creator import DB_SETTINGS_PATH
 import os
 
 # Load all the accounts' database settings
+
+if not os.path.exists(DB_SETTINGS_PATH):
+    os.mkdir(DB_SETTINGS_PATH)
+
 for file in os.listdir(DB_SETTINGS_PATH):
     if file == 'desktop.ini':
         continue
