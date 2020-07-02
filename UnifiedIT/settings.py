@@ -81,13 +81,15 @@ DATABASES = {
     'default': {},
     'admin_db': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'UnifiedIT',
+        'NAME': 'uitdb',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': '127.0.0.1',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
+
+DB_VENDOR = 'sqlite'  # Available options: postgres, sqlite
 
 DATABASE_ROUTERS = ['Profiler.DatabaseSelector.ProfilerRouter']
 

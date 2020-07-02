@@ -1,12 +1,13 @@
+import re
+
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from Accountant.models import *
-from Accountant.db_creator import DBManager
 from django.contrib.auth.admin import UserAdmin
-from Accountant.forms import CustomUserCreationForm, CustomUserChangeForm
-
 from django.utils import timezone
-# Register your models here.
+
+from Accountant.db_manager import DBManager
+from Accountant.forms import CustomUserCreationForm, CustomUserChangeForm
+from Accountant.models import *
 
 
 class MainAdmin(admin.AdminSite):
@@ -19,13 +20,14 @@ main_admin.disable_action('delete_selected')
 
 def approve_request(model_admin, request, query_set):
     for acc_req in query_set:
-        if not acc_req.status == 'approved':
-
+        if acc_req.status != 'approved':
             # Create a separate DB for the same
             # Using 'institute_name' as DB_NAME
-            account_db_name = acc_req.institute_name.replace(' ', '_')
+            account_db_name = re.sub(r'\s+', '_', acc_req.institute_name)
             db_man = DBManager(account_db_name)
             db_details = db_man.create()
+            if not db_details:
+                return
 
             # Create an account for this user
             acc = Account()
@@ -37,14 +39,9 @@ def approve_request(model_admin, request, query_set):
                 is_institute_admin=True,
                 is_staff=True
             )
-            acc.db_key = account_db_name  # Using a separate field to store database key for settings.DATABASE
+            acc.db_key = account_db_name  # Store database key for settings.DATABASE (usage: settings.DATABASE[acc.db_key])
 
-            acc.db_engine = db_details['ENGINE']
-            acc.db_name = db_details['NAME']
-            acc.db_user = db_details['USER']
-            acc.db_password = db_details['PASSWORD']
-            acc.db_host = db_details['HOST']
-            acc.db_port = db_details['PORT']
+            acc.db_details = db_details
 
             acc.user.account_link = acc  # This doesn't work actually
 
@@ -69,10 +66,11 @@ approve_request.short_description = 'Grant selected requests'
 
 def delete_account(model_admin, request, query_set):
     for account in query_set:
-        acc_req = AccountRequest.objects.get(username=account.user.username)
-        acc_req.status = 'dead'
-        acc_req.save()
-        acc = DBManager(str(account))
+        acc_req = AccountRequest.objects.filter(username=account.user.username).first()
+        if acc_req is not None:
+            acc_req.status = 'dead'
+            acc_req.save()
+        acc = DBManager(account.db_key)
         acc_user = User.objects.get(username=account.user.username)
         acc_user.delete()
         acc.delete()
@@ -93,7 +91,10 @@ class AccountAdmin(admin.ModelAdmin):
         return account.user.username
 
     def account_institute(self, account):
-        return account.details.institute_name
+        if account.details is not None:
+            return account.details.institute_name
+        else:
+            return 'None'
 
     list_display = ['account_user', 'account_institute', 'db_key', 'status']
     actions = [delete_account, ]
@@ -130,7 +131,6 @@ class CustomUserAdmin(UserAdmin):
     filter_horizontal = ()
 
     def save_model(self, request, obj, form, change):
-
         if not form.cleaned_data['is_institute_admin'] or not form.cleaned_data['is_institute_admin']:
             obj.account_link = None
             obj.is_institute_admin = False

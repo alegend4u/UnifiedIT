@@ -1,0 +1,14 @@
+{
+  "postgres": {
+    "ENGINE": "django.db.backends.postgresql",
+    "NAME": "postgres",
+    "USER": "postgres",
+    "PASSWORD": "password",
+    "HOST": "localhost",
+    "PORT": "5432"
+  },
+  "sqlite": {
+    "ENGINE": "django.db.backends.sqlite3",
+    "NAME": ""
+  }
+}

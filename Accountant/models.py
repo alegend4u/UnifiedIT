@@ -1,3 +1,5 @@
+import json
+
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import (
@@ -86,10 +88,36 @@ class AccountRequest(models.Model):
         return str(self.username)
 
 
+class JSONField(models.CharField):
+    """
+    JSON data gets stored as string in database.
+    """
+
+    def __init__(self, *args, **kwargs):
+        kwargs['max_length'] = 1023
+        super(JSONField, self).__init__(*args, **kwargs)
+
+    def from_db_value(self, value, expression, connection):
+        if value is None:
+            return value
+        return json.loads(value)
+
+    def to_python(self, value):
+        if isinstance(value, dict):
+            return value
+        if value is None:
+            return value
+        return json.loads(value)
+
+    def get_prep_value(self, value):
+        return json.dumps(value)
+
+
 class Account(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     details = models.OneToOneField(AccountRequest, on_delete=models.SET_NULL, null=True)
     db_key = models.CharField(max_length=CHAR_FIELD_MAX_LENGTH)
+    db_details = JSONField()
 
     ACTIVE = 'active'
     INACTIVE = 'inactive'
@@ -103,14 +131,6 @@ class Account(models.Model):
 
     status = models.CharField(max_length=CHAR_FIELD_MAX_LENGTH,
                               choices=STATUS_CHOICES, default=ACTIVE)
-
-    # Account Database Details
-    db_engine = models.CharField(max_length=CHAR_FIELD_MAX_LENGTH)
-    db_name = models.CharField(max_length=CHAR_FIELD_MAX_LENGTH)
-    db_user = models.CharField(max_length=CHAR_FIELD_MAX_LENGTH)
-    db_password = models.CharField(max_length=CHAR_FIELD_MAX_LENGTH)
-    db_host = models.CharField(max_length=CHAR_FIELD_MAX_LENGTH)
-    db_port = models.CharField(max_length=CHAR_FIELD_MAX_LENGTH)
 
     def __str__(self):
         return str(self.details.username)
