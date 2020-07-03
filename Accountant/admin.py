@@ -70,11 +70,11 @@ def delete_account(model_admin, request, query_set):
         if acc_req is not None:
             acc_req.status = 'dead'
             acc_req.save()
-        acc = DBManager(account.db_key)
+        accdb = DBManager(account.db_key)
         acc_user = User.objects.get(username=account.user.username)
         acc_user.delete()
-        acc.delete()
         account.delete()
+        accdb.delete()
 
 
 delete_account.short_description = 'Delete selected accounts'

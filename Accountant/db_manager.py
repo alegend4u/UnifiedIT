@@ -87,7 +87,7 @@ def get_db_deletor(vendor):
         def delete(target_db_name, control_conf):
             dbname = control_conf.get('NAME')
             user = control_conf.get('USER')
-            password = control_conf.get('NAME')
+            password = control_conf.get('PASSWORD')
             host = control_conf.get('HOST')
             port = control_conf.get('PORT')
 
@@ -104,8 +104,13 @@ def get_db_deletor(vendor):
                 print("DATABASE DELETED! - ", dbname)
             except (Exception, psycopg2.DatabaseError) as error:
                 print(error)
-                cur.close()
-                con.close()
+                return False
+            finally:
+                if cur:
+                    cur.close()
+                if con:
+                    con.close()
+            return True
 
         return delete
     if vendor == 'sqlite':
@@ -113,16 +118,35 @@ def get_db_deletor(vendor):
             dbpath = SQLITE_DIR / target_db_name
             if dbpath.exists():
                 os.remove(dbpath)
+            return True
 
         return delete
 
 
 class DBManager:
-    def __init__(self, db_name, vendor=settings.DB_VENDOR):
+    def __init__(self, db_name, vendor=settings.DEFAULT_DB_VENDOR):
         self.name = db_name
-        self.creator = get_db_creator(vendor)
-        self.deletor = get_db_deletor(vendor)
-        self.conf = CONTROL_CONF[vendor].copy()
+
+        self.conf = None
+        self.vendor = None
+
+        # Check if the account already exists and load its conf if it does.
+        file = (DB_CONFS_DIR / db_name).with_suffix('.json')
+        if file.exists():
+            with open(str(file)) as f:
+                self.conf = json.load(f)
+        else:
+            self.conf = CONTROL_CONF[vendor].copy()
+
+        # Assign vendor as per engine
+        for vendor in settings.DB_VENDORS:
+            if vendor in self.conf['ENGINE']:
+                self.vendor = vendor
+                break
+
+        # Get creator and deletor for vendor
+        self.creator = get_db_creator(self.vendor)
+        self.deletor = get_db_deletor(self.vendor)
 
     def create(self):
         self.conf = self.creator(self.name, self.conf)
@@ -147,7 +171,11 @@ class DBManager:
 
     def delete(self):
         # Delete the database
-        self.deletor(self.name, self.conf)
+        delete_status = self.deletor(self.name, self.conf)
+        if not delete_status:
+            # This happens mostly because the target db is in other use.
+            print(f"[WARNING]: The database {self.name} was not deleted due to some issue. Below is its conf:")
+            print(json.dumps(self.conf, indent=2))
 
         # Delete the account's conf file
         filename = self.name + '.json'
@@ -160,5 +188,4 @@ class DBManager:
         # Delete from settings.DATABASES
         del settings.DATABASES[self.name]
 
-        print(settings.DATABASES)
         print('Account {} deleted!', self.name)

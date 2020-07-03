@@ -89,7 +89,9 @@ DATABASES = {
     }
 }
 
-DB_VENDOR = 'sqlite'  # Available options: postgres, sqlite
+DB_VENDORS = ['sqlite', 'postgres']
+
+DEFAULT_DB_VENDOR = DB_VENDORS[1]  # Available options: postgres, sqlite
 
 DATABASE_ROUTERS = ['Profiler.DatabaseSelector.ProfilerRouter']
 
