@@ -1,3 +1,5 @@
 .idea
+Accountant/account_db_confs
+Accountant/sqlite_dbs
 *.pyc
 *.sqlite3
