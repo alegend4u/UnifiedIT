@@ -28,7 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -73,25 +72,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'UnifiedIT.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
     'default': {},
     'admin_db': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'uitdb',
-        'USER': 'postgres',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'uitdb.sqlite3'),
     }
 }
 
+# Available options: postgres, sqlite
 DB_VENDORS = ['sqlite', 'postgres']
 
-DEFAULT_DB_VENDOR = DB_VENDORS[1]  # Available options: postgres, sqlite
+DEFAULT_DB_VENDOR = DB_VENDORS[1]  # Currently, sqlite is set as default
 
 DATABASE_ROUTERS = ['Profiler.DatabaseSelector.ProfilerRouter']
 
@@ -132,7 +127,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/

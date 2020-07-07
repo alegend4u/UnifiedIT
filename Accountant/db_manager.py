@@ -60,7 +60,7 @@ def get_db_creator(vendor):
         def create(account_db_name, control_conf=None):
 
             # Set the dbname upon the provided account_db_name
-            dbpath = SQLITE_DIR / account_db_name  # Example: ../../CompanyA_db.sqlite3
+            dbpath = (SQLITE_DIR / account_db_name).with_suffix('.sqlite3')  # Example: .../CompanyA_db.sqlite3
             account_db_conf = control_conf.copy()
             account_db_conf['NAME'] = str(dbpath)
 
@@ -115,7 +115,7 @@ def get_db_deletor(vendor):
         return delete
     if vendor == 'sqlite':
         def delete(target_db_name, control_conf=None):
-            dbpath = SQLITE_DIR / target_db_name
+            dbpath = (SQLITE_DIR / target_db_name).with_suffix('.sqlite3')
             if dbpath.exists():
                 os.remove(dbpath)
             return True

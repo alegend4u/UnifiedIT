@@ -1,8 +1,6 @@
 from Accountant.models import Account
 
-
 global db_name
-db_name = ''
 
 
 class RouterMiddleware(object):
@@ -20,6 +18,7 @@ class RouterMiddleware(object):
         if request.user.is_superuser:
             db_name = "admin_db"
         elif request.user.is_anonymous:
+            print("-" * 10, "Anonumous User!", "-" * 10)
             db_name = ''
         elif request.user.is_institute_admin:
             current_user = Account.objects.get(user=request.user)

@@ -15,12 +15,15 @@ class MainAdmin(admin.AdminSite):
 
 
 main_admin = MainAdmin(name='main_admin')
+
+# Disable the default delete action to define and
+# assign a customised delete action later on.
 main_admin.disable_action('delete_selected')
 
 
 def approve_request(model_admin, request, query_set):
     for acc_req in query_set:
-        if acc_req.status != 'approved':
+        if acc_req.status == 'pending':
             # Create a separate DB for the same
             # Using 'institute_name' as DB_NAME
             account_db_name = re.sub(r'\s+', '_', acc_req.institute_name)
@@ -39,7 +42,10 @@ def approve_request(model_admin, request, query_set):
                 is_institute_admin=True,
                 is_staff=True
             )
-            acc.db_key = account_db_name  # Store database key for settings.DATABASE (usage: settings.DATABASE[acc.db_key])
+
+            # Store database key for settings.DATABASE
+            # (usage: settings.DATABASE[acc.db_key])
+            acc.db_key = account_db_name
 
             acc.db_details = db_details
 
@@ -82,7 +88,10 @@ delete_account.short_description = 'Delete selected accounts'
 
 class AccountRequestAdmin(admin.ModelAdmin):
     list_display = ['username', 'institute_name', 'request_date', 'approval_date', 'status']
-    actions = [approve_request, 'delete_selected']
+    actions = [approve_request]
+
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 
 class AccountAdmin(admin.ModelAdmin):
